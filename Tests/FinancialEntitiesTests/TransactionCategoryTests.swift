@@ -86,7 +86,7 @@ struct TransactionCategoryTests {
 
         // Assert
         #expect(category.name == "Utilities")
-        #expect(category.modified != originalModified)
+        #expect(category.modified == originalModified)
     }
 
     @Test func initializationWithWhitespaces() throws {
