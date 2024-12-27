@@ -85,8 +85,19 @@ struct TransactionCategoryTests {
         try category.updateName(newName)
 
         // Assert
-        #expect(category.name == newName)
+        #expect(category.name == "Utilities")
         #expect(category.modified != originalModified)
+    }
+
+    @Test func initializationWithWhitespaces() throws {
+        // Arrange
+        let name = "  Salary  "
+
+        // Act
+        let category = try TransactionCategory(name: name)
+
+        // Assert
+        #expect(category.name == "Salary")
     }
 
     @Test func updateNameWithEmptyStringThrowsError() throws {

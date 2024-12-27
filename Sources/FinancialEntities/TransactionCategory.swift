@@ -14,25 +14,22 @@ struct TransactionCategory: Identifiable, Hashable {
     var modified: Date?
 
     init(name: String, created: Date = Date(), modified: Date? = nil) throws {
-        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedName.isEmpty else {
             throw TransactionCategoryError.emptyName
         }
-        self.name = name
+        self.name = trimmedName
         self.created = created
         self.modified = modified
     }
 
     mutating func updateName(_ newName: String) throws {
-        guard !newName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        let trimmedNewName = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedNewName.isEmpty else {
             throw TransactionCategoryError.emptyName
         }
-        let trimmedNewName = newName.trimmingCharacters(in: .whitespacesAndNewlines)
-        if name.trimmingCharacters(in: .whitespacesAndNewlines) != trimmedNewName {
+        if name != trimmedNewName {
             name = trimmedNewName
-            modified = Date()
-        } else if name != newName {
-            // Update name to match exact whitespace
-            name = newName
             modified = Date()
         }
     }
