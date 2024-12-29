@@ -1,13 +1,13 @@
 //
-//  TransactionCategory.swift
+//  Account.swift
 //  FinancialEntities
 //
-//  Created by Simon Bogutzky on 27.12.24.
+//  Created by Simon Bogutzky on 29.12.24.
 //
 
 import Foundation
 
-struct TransactionCategory: Identifiable, Hashable {
+struct Account: Identifiable, Hashable {
     var id = UUID()
     private(set) var name: String
     var created: Date
@@ -17,7 +17,7 @@ struct TransactionCategory: Identifiable, Hashable {
     init(name: String, created: Date = Date(), modified: Date? = nil) throws {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedName.isEmpty else {
-            throw TransactionCategoryError.emptyName
+            throw AccountError.emptyName
         }
         self.name = trimmedName
         self.created = created
@@ -27,7 +27,7 @@ struct TransactionCategory: Identifiable, Hashable {
     mutating func updateName(_ newName: String) throws {
         let trimmedNewName = newName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedNewName.isEmpty else {
-            throw TransactionCategoryError.emptyName
+            throw AccountError.emptyName
         }
         if name != trimmedNewName {
             name = trimmedNewName
@@ -45,7 +45,7 @@ struct TransactionCategory: Identifiable, Hashable {
         modified = Date()
     }
 
-    enum TransactionCategoryError: Error {
+    enum AccountError: Error {
         case emptyName
     }
 

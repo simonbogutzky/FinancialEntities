@@ -147,4 +147,53 @@ struct TransactionCategoryTests {
         #expect(category.transactions.isEmpty)
         #expect(category.modified != nil)
     }
+
+    @Test func balanceWithNoTransactions() throws {
+        // Arrange
+        let category = try TransactionCategory(name: "Income")
+
+        // Act & Assert
+        #expect(category.balance == 0.0)
+    }
+
+    @Test func balanceWithPositiveTransactions() throws {
+        // Arrange
+        var category = try TransactionCategory(name: "Income")
+        let transactions = [
+            Transaction(text: "Salary", amount: 1500.0, created: Date(), category: category),
+            Transaction(text: "Bonus", amount: 300.0, created: Date(), category: category)
+        ]
+        transactions.forEach { category.addTransaction($0) }
+
+        // Act & Assert
+        #expect(category.balance == 1800.0)
+    }
+
+    @Test func balanceWithNegativeTransactions() throws {
+        // Arrange
+        var category = try TransactionCategory(name: "Expense")
+        let transactions = [
+            Transaction(text: "Rent", amount: -800.0, created: Date(), category: category),
+            Transaction(text: "Groceries", amount: -150.0, created: Date(), category: category)
+        ]
+        transactions.forEach { category.addTransaction($0) }
+
+        // Act & Assert
+        #expect(category.balance == -950.0)
+    }
+
+    @Test func balanceWithMixedTransactions() throws {
+        // Arrange
+        var category = try TransactionCategory(name: "Mixed")
+        let transactions = [
+            Transaction(text: "Income", amount: 2000.0, created: Date(), category: category),
+            Transaction(text: "Expense", amount: -800.0, created: Date(), category: category),
+            Transaction(text: "Refund", amount: 500.0, created: Date(), category: category),
+            Transaction(text: "Fee", amount: -150.0, created: Date(), category: category)
+        ]
+        transactions.forEach { category.addTransaction($0) }
+
+        // Act & Assert
+        #expect(category.balance == 1550.0)
+    }
 }
