@@ -5,13 +5,14 @@ import PackageDescription
 let package = Package(
     name: "FinancialEntities",
     platforms: [
-            .iOS(.v13),
-            .macOS(.v12)
-        ],
+        .iOS(.v13),
+        .macOS(.v12),
+    ],
     products: [
         .library(
             name: "FinancialEntities",
-            targets: ["FinancialEntities"]),
+            targets: ["FinancialEntities"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.57.0"),
@@ -21,9 +22,10 @@ let package = Package(
         .target(
             name: "FinancialEntities",
             swiftSettings: [
-                .unsafeFlags(["-strict-concurrency=complete"])
+                .unsafeFlags(["-strict-concurrency=complete"]),
             ],
-        plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]),
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+        ),
         .testTarget(
             name: "FinancialEntitiesTests",
             dependencies: ["FinancialEntities"],

@@ -109,4 +109,42 @@ struct TransactionCategoryTests {
             try category.updateName("")
         }
     }
+
+    @Test func addTransaction() throws {
+        // Arrange
+        var category = try TransactionCategory(name: "Income")
+        let transaction = Transaction(
+            text: "Salary",
+            amount: 1500.0,
+            created: Date(),
+            category: category
+        )
+
+        // Act
+        category.addTransaction(transaction)
+
+        // Assert
+        #expect(category.transactions.count == 1)
+        #expect(category.transactions.first?.id == transaction.id)
+        #expect(category.modified != nil)
+    }
+
+    @Test func removeTransaction() throws {
+        // Arrange
+        var category = try TransactionCategory(name: "Income")
+        let transaction = Transaction(
+            text: "Salary",
+            amount: 1500.0,
+            created: Date(),
+            category: category
+        )
+        category.addTransaction(transaction)
+
+        // Act
+        category.removeTransaction(transaction)
+
+        // Assert
+        #expect(category.transactions.isEmpty)
+        #expect(category.modified != nil)
+    }
 }

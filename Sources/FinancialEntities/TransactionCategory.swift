@@ -12,6 +12,7 @@ struct TransactionCategory: Identifiable, Hashable {
     private(set) var name: String
     var created: Date
     var modified: Date?
+    private(set) var transactions: [Transaction] = []
 
     init(name: String, created: Date = Date(), modified: Date? = nil) throws {
         let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -32,6 +33,16 @@ struct TransactionCategory: Identifiable, Hashable {
             name = trimmedNewName
             modified = Date()
         }
+    }
+
+    mutating func addTransaction(_ transaction: Transaction) {
+        transactions.append(transaction)
+        modified = Date()
+    }
+
+    mutating func removeTransaction(_ transaction: Transaction) {
+        transactions.removeAll { $0.id == transaction.id }
+        modified = Date()
     }
 
     enum TransactionCategoryError: Error {
